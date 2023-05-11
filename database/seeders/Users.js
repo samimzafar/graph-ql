@@ -36,7 +36,7 @@ module.exports = [
     status: "active",
     phone: "+1-202-555-0111",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "John Smith",
@@ -45,7 +45,7 @@ module.exports = [
     status: "inactive",
     phone: "+1-202-555-0222",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Emily Davis",
@@ -54,7 +54,7 @@ module.exports = [
     status: "active",
     phone: "+1-202-555-0333",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "William Brown",
@@ -63,7 +63,7 @@ module.exports = [
     status: "inactive",
     phone: "+1-202-555-0444",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Olivia Wilson",
@@ -72,7 +72,7 @@ module.exports = [
     status: "active",
     phone: "+1-202-555-0555",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "John Doe",
@@ -81,7 +81,7 @@ module.exports = [
     status: "active",
     phone: "1234567890",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Jane Smith",
@@ -90,7 +90,7 @@ module.exports = [
     status: "active",
     phone: "9876543210",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "David Johnson",
@@ -99,7 +99,7 @@ module.exports = [
     status: "active",
     phone: "5555555555",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Emily Davis",
@@ -108,7 +108,7 @@ module.exports = [
     status: "inactive",
     phone: "9999999999",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Michael Wilson",
@@ -117,7 +117,7 @@ module.exports = [
     status: "active",
     phone: "7777777777",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Olivia Martinez",
@@ -126,7 +126,7 @@ module.exports = [
     status: "active",
     phone: "1111111111",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "James Anderson",
@@ -135,7 +135,7 @@ module.exports = [
     status: "inactive",
     phone: "2222222222",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Sophia Clark",
@@ -144,7 +144,7 @@ module.exports = [
     status: "active",
     phone: "3333333333",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Daniel Thomas",
@@ -153,7 +153,7 @@ module.exports = [
     status: "active",
     phone: "4444444444",
     createdAt,
-    updatedAt
+    updatedAt,
   },
   {
     name: "Ava Lewis",
@@ -162,6 +162,6 @@ module.exports = [
     status: "active",
     phone: "6666666666",
     createdAt,
-    updatedAt
+    updatedAt,
   },
 ];

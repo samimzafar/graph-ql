@@ -7,10 +7,10 @@ const graphqlURL = config.get("graphql");
 
 app.use(express.json());
 app.use(
- graphqlURL,
- graphqlHTTP({
-  schema,
-  graphiql: true,
- })
+  graphqlURL,
+  graphqlHTTP({
+    schema,
+    graphiql: true,
+  })
 );
 module.exports = app;
