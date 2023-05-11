@@ -6,7 +6,7 @@ const UserType = new GraphQLObjectType({
   id: { type: GraphQLInt },
   name: { type: GraphQLString },
   email: { type: GraphQLString },
-  phone: { type: GraphQLInt },
+  phone: { type: GraphQLString },
  })
 });
 
@@ -17,10 +17,10 @@ const RootQuery = new GraphQLObjectType({
    type: new GraphQLList(UserType),
    resolve(parent, args) {
     let data = [{
-     id: 12, name: "codeimprove", email: "code@gmail.com", phone: 12349842
+     id: 12, name: "codeimprove", email: "code@gmail.com", phone: "12349842"
     },
     {
-     id: 14, name: "demo", email: "demo@gmail.com", phone: 32324842
+     id: 14, name: "demo", email: "demo@gmail.com", phone: "32324842"
     }];
     return data;
    }
