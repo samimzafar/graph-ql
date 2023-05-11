@@ -6,6 +6,7 @@ const columnName = "name";
 const columnEmail = "email";
 const columnGender = "gender";
 const columnStatus = "status";
+const columnPhone = "phone";
 
 module.exports = {
   up: async (queryInterface) => {
