@@ -1,27 +1,27 @@
+const { Users } = require("./models");
+const tableUser = "users";
 const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList } = graphql;
 const UserType = new GraphQLObjectType({
- name: "user",
+ name: tableUser,
  fields: () => ({
   id: { type: GraphQLInt },
   name: { type: GraphQLString },
   email: { type: GraphQLString },
-  phone: { type: GraphQLString },
+  gender: { type: GraphQLString },
+  status: { type: GraphQLString },
+  createdAt: { type: GraphQLInt },
+  updatedAt: { type: GraphQLInt },
  })
 });
 
 const RootQuery = new GraphQLObjectType({
- name: "xyz",
+ name: "GraphQL",
  fields: {
-  codeimprove: {
+  userList: {
    type: new GraphQLList(UserType),
    resolve(parent, args) {
-    let data = [{
-     id: 12, name: "codeimprove", email: "code@gmail.com", phone: "12349842"
-    },
-    {
-     id: 14, name: "demo", email: "demo@gmail.com", phone: "32324842"
-    }];
+    let data = Users.findAll();
     return data;
    }
   }
