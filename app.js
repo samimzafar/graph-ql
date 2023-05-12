@@ -12,7 +12,8 @@ const graphqlURL = config.get("graphql");
 
 const Root = {
   Models: {
-    Users, UserOtps
+    Users,
+    UserOtps,
   },
 };
 

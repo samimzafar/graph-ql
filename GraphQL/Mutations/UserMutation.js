@@ -24,17 +24,19 @@ module.exports = {
         });
         user = user && user.get({ plain: true });
         const otp = createOtp();
-        await UserOtps.create({
-          otp,
-          fk_user_id: user.id
-        }, {
-          transaction
-        });
+        await UserOtps.create(
+          {
+            otp,
+            fk_user_id: user.id,
+          },
+          {
+            transaction,
+          }
+        );
         await transaction.commit();
         return args;
       } catch (error) {
         await transaction.rollback();
-
       }
     },
   },
