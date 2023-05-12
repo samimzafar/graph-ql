@@ -1,6 +1,7 @@
-const { GraphQLList } = require("graphql");
+const { GraphQLList, GraphQLInt, GraphQLString } = require("graphql");
 const UserType = require("../TypeDefs/UserType");
 module.exports = {
+
   getAllUsers: {
     type: new GraphQLList(UserType),
     resolve: async (parent, args, context) => {
@@ -13,4 +14,17 @@ module.exports = {
       return data;
     },
   },
+
+  getOneUser: {
+    type: new GraphQLList(UserType),
+    args: {
+      name: { type: GraphQLString },
+      id: { type: GraphQLInt }
+    },
+    resolve: async (parent, args) => {
+      const { name, id } = args;
+      const { Models: { Users } } = parent;
+      return Users.findAll({ where: { name, id } });
+    }
+  }
 };
