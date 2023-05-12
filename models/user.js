@@ -1,7 +1,7 @@
 const table = "users";
 const moment = require("moment");
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define(table, {
+  const User = sequelize.define(table, {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     gender: DataTypes.STRING,
@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
   });
-  Users.beforeCreate((users) => {
-    users.dataValues.createdAt = moment().unix();
-    users.dataValues.updatedAt = moment().unix();
+  User.beforeCreate((user) => {
+    user.dataValues.createdAt = moment().unix();
+    user.dataValues.updatedAt = moment().unix();
   });
 
-  Users.beforeUpdate((users) => {
-    users.dataValues.updatedAt = moment().unix();
+  User.beforeUpdate((user) => {
+    user.dataValues.updatedAt = moment().unix();
   });
-  return Users;
+  return User;
 };
