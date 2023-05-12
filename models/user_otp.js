@@ -1,8 +1,8 @@
 "use strict";
 const moment = require("moment");
-const table = "student_otps";
+const table = "user_otps";
 module.exports = (sequelize, DataTypes) => {
- const StudentOtp = sequelize.define(table, {
+ const UserOtp = sequelize.define(table, {
   id: {
    type: DataTypes.INTEGER,
    primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
    type: DataTypes.INTEGER,
    allowNull: false,
   },
-  fk_student_id: {
+  fk_user_id: {
    type: DataTypes.INTEGER,
    allowNull: false,
   },
@@ -30,18 +30,18 @@ module.exports = (sequelize, DataTypes) => {
   },
  });
 
- StudentOtp.beforeCreate((studentOtp) => {
+ UserOtp.beforeCreate((userOtp) => {
   const currentTime = moment().unix();
-  studentOtp.dataValues.expireAt = moment
+  userOtp.dataValues.expireAt = moment
    .unix(currentTime)
    .add(5, "minutes")
    .unix();
-  studentOtp.dataValues.createdAt = currentTime;
-  studentOtp.dataValues.updatedAt = currentTime;
+  userOtp.dataValues.createdAt = currentTime;
+  userOtp.dataValues.updatedAt = currentTime;
  });
- StudentOtp.beforeUpdate((studentOtp) => {
-  studentOtp.dataValues.updatedAt = moment().unix();
+ UserOtp.beforeUpdate((userOtp) => {
+  userOtp.dataValues.updatedAt = moment().unix();
  });
 
- return StudentOtp;
+ return UserOtp;
 };

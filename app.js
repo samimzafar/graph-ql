@@ -3,7 +3,7 @@ const app = express();
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./GraphQL/index");
 const config = require("./config");
-const { Users } = require("./models");
+const { Users, UserOtps } = require("./models");
 const graphqlURL = config.get("graphql");
 
 //Root is used if you want to pass some variable,DB URL,Ports,accessKey, config keys
@@ -12,7 +12,7 @@ const graphqlURL = config.get("graphql");
 
 const Root = {
   Models: {
-    Users,
+    Users, UserOtps
   },
 };
 

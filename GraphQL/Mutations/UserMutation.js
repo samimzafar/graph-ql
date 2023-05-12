@@ -1,6 +1,8 @@
 const { GraphQLString, GraphQLInt } = require("graphql");
 const UserType = require("../TypeDefs/UserType");
 const SuccessResponseType = require("../TypeDefs/SuccessResponseType");
+const { createOtp } = require("../../utils/createOtp");
+const { sequelize } = require("../../models");
 module.exports = {
   addUser: {
     type: UserType,
@@ -12,11 +14,28 @@ module.exports = {
       phone: { type: GraphQLString },
     },
     resolve: async (parent, args) => {
-      const {
-        Models: { Users },
-      } = parent;
-      await Users.create(args);
-      return args;
+      try {
+        const transaction = await sequelize.transaction();
+        const {
+          Models: { Users, UserOtps },
+        } = parent;
+        let user = await Users.create(args, {
+          transaction,
+        });
+        user = user && user.get({ plain: true });
+        const otp = createOtp();
+        await UserOtps.create({
+          otp,
+          fk_user_id: user.id
+        }, {
+          transaction
+        });
+        await transaction.commit();
+        return args;
+      } catch (error) {
+        await transaction.rollback();
+
+      }
     },
   },
 
