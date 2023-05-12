@@ -2,7 +2,6 @@ const { GraphQLString, GraphQLInt } = require("graphql");
 const UserType = require("../TypeDefs/UserType");
 const SuccessResponseType = require("../TypeDefs/SuccessResponseType");
 module.exports = {
-
   addUser: {
     type: UserType,
     args: {
@@ -13,7 +12,9 @@ module.exports = {
       phone: { type: GraphQLString },
     },
     resolve: async (parent, args) => {
-      const { Models: { Users }, } = parent;
+      const {
+        Models: { Users },
+      } = parent;
       await Users.create(args);
       return args;
     },
@@ -28,20 +29,25 @@ module.exports = {
     },
     resolve: async (parent, args) => {
       const { id, status, phone } = args;
-      const { Models: { Users }, } = parent;
-      await Users.update({
-        status,
-        phone
-      }, {
-        where: { id },
-        silent: true
-      });
+      const {
+        Models: { Users },
+      } = parent;
+      await Users.update(
+        {
+          status,
+          phone,
+        },
+        {
+          where: { id },
+          silent: true,
+        }
+      );
       return {
         success: true,
         message: "Updated Successfully",
         statusCode: 200,
       };
-    }
+    },
   },
 
   deleteUser: {
@@ -51,15 +57,17 @@ module.exports = {
     },
     resolve: async (parent, args) => {
       const { id, status, phone } = args;
-      const { Models: { Users }, } = parent;
+      const {
+        Models: { Users },
+      } = parent;
       await Users.destroy({
-        where: { id }
+        where: { id },
       });
       return {
         success: true,
         message: "Deleted Successfully",
         statusCode: 200,
       };
-    }
-  }
+    },
+  },
 };
