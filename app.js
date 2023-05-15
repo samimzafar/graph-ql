@@ -18,8 +18,6 @@ const Root = {
   },
 };
 
-
-
 app.use(express.json());
 app.use(
   graphqlURL,
