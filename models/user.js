@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     gender: DataTypes.STRING,
     status: DataTypes.STRING,
     phone: DataTypes.STRING,
+    role: {
+      type: DataTypes.ENUM("Admin", "User", "Student", "Faculty"),
+      defaultValue: "User",
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.INTEGER,

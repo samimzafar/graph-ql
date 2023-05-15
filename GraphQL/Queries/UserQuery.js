@@ -4,8 +4,6 @@ module.exports = {
   getAllUsers: {
     type: new GraphQLList(UserType),
     resolve: async (parent, args, context) => {
-      const token = await context();
-      console.log(token);
       const {
         Models: { Users },
       } = parent;
@@ -21,11 +19,11 @@ module.exports = {
       id: { type: GraphQLInt },
     },
     resolve: async (parent, args) => {
-      const { name, id } = args;
+      const { id } = args;
       const {
         Models: { Users },
       } = parent;
-      return Users.findAll({ where: { name, id } });
+      return Users.findAll({ where: { id } });
     },
   },
 };
