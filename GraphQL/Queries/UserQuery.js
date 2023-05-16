@@ -7,7 +7,7 @@ module.exports = {
       const {
         Models: { Users },
       } = parent;
-      let data = Users.findAll();
+      let data = await Users.findAll();
       return data;
     },
   },

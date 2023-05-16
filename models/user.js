@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM("Admin", "User", "Student", "Faculty"),
       defaultValue: "User",
     },
+    archieved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -19,7 +23,24 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-  });
+  },
+    {
+      defaultScope: {
+        where: {
+          archieved: false
+        }
+      },
+      scopes: {
+        checkStatus(id) {
+          return {
+            where: {
+              status: "work from home",
+            },
+          };
+        },
+      }
+    });
+
   User.beforeCreate((user) => {
     user.dataValues.createdAt = moment().unix();
     user.dataValues.updatedAt = moment().unix();

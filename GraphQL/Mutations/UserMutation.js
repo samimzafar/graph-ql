@@ -81,7 +81,9 @@ module.exports = {
       const {
         Models: { Users },
       } = parent;
-      await Users.destroy({
+      await Users.update({
+        archieved: true
+      }, {
         where: { id },
       });
       return {
