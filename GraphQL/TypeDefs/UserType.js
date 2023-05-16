@@ -1,4 +1,9 @@
-const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean } = require("graphql");
+const {
+  GraphQLObjectType,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLBoolean,
+} = require("graphql");
 const tableUser = "users";
 const UserType = new GraphQLObjectType({
   name: tableUser,

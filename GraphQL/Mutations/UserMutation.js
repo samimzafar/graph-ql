@@ -81,11 +81,14 @@ module.exports = {
       const {
         Models: { Users },
       } = parent;
-      await Users.update({
-        archieved: true
-      }, {
-        where: { id },
-      });
+      await Users.update(
+        {
+          archieved: true,
+        },
+        {
+          where: { id },
+        }
+      );
       return {
         success: true,
         message: "Deleted Successfully",
