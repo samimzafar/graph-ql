@@ -1,6 +1,6 @@
 "use strict";
 
-const table = "user_otps";
+const table = "schools";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -11,25 +11,32 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      otp: {
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.INTEGER,
+        unique: true,
       },
-      fk_user_id: {
+      phone_number: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.INTEGER,
+        unique: true,
       },
-      expireAt: {
-        type: Sequelize.INTEGER,
+      address: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      archived: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
     });
   },
