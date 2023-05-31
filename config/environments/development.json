@@ -3,7 +3,7 @@
   "graphql": "/graphql",
   "db": {
     "host": "127.0.0.1",
-    "name": "graph_ql",
+    "name": "taleem_goal",
     "username": "root",
     "password": ""
   }
