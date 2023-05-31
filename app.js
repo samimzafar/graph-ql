@@ -5,8 +5,6 @@ const config = require("./config");
 const { Users, UserOtps, sequelize } = require("./models");
 const graphqlURL = config.get("graphql");
 const schema = require("./GraphQL");
-const isAdmin = require("./middlewares/isAdmin");
-const ApiError = require("./utils/ApiError");
 //Root is used if you want to pass some variable,DB URL,Ports,accessKey, config keys
 //etc so that you can acces from parent param
 //here in Root I have passed Models so that anywhere in query i can access any models
@@ -45,11 +43,7 @@ app.use((req, res) => {
 });
 
 // error handling
-app.use((err, req, res, next) => {
-  // if (res.headersSent) {
-  //   return next(err);
-  // }
-  // req.log.error(err);
+app.use((err, req, res) => {
   return res.status(err.status || 500).send({
     status: err.status || 500,
     success: false,

@@ -14,8 +14,8 @@ module.exports = {
       phone: { type: GraphQLString },
     },
     resolve: async (parent, args) => {
+      const transaction = await sequelize.transaction();
       try {
-        const transaction = await sequelize.transaction();
         const {
           Models: { Users, UserOtps },
         } = parent;
@@ -77,7 +77,7 @@ module.exports = {
       id: { type: GraphQLInt },
     },
     resolve: async (parent, args) => {
-      const { id, status, phone } = args;
+      const { id } = args;
       const {
         Models: { Users },
       } = parent;

@@ -3,7 +3,7 @@ const UserType = require("../TypeDefs/UserType");
 module.exports = {
   getAllUsers: {
     type: new GraphQLList(UserType),
-    resolve: async (parent, args, context) => {
+    resolve: async (parent) => {
       const {
         Models: { Users },
       } = parent;
