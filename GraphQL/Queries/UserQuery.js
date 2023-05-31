@@ -3,13 +3,11 @@ const UserType = require("../TypeDefs/UserType");
 module.exports = {
   getAllUsers: {
     type: new GraphQLList(UserType),
-    resolve: async (parent, args, context) => {
-      const token = await context();
-      console.log(token);
+    resolve: async (parent) => {
       const {
         Models: { Users },
       } = parent;
-      let data = Users.findAll();
+      let data = await Users.findAll();
       return data;
     },
   },
@@ -21,11 +19,11 @@ module.exports = {
       id: { type: GraphQLInt },
     },
     resolve: async (parent, args) => {
-      const { name, id } = args;
+      const { id } = args;
       const {
         Models: { Users },
       } = parent;
-      return Users.findAll({ where: { name, id } });
+      return Users.findAll({ where: { id } });
     },
   },
 };

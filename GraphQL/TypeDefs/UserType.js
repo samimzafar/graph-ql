@@ -1,4 +1,9 @@
-const { GraphQLObjectType, GraphQLInt, GraphQLString } = require("graphql");
+const {
+  GraphQLObjectType,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLBoolean,
+} = require("graphql");
 const tableUser = "users";
 const UserType = new GraphQLObjectType({
   name: tableUser,
@@ -9,6 +14,8 @@ const UserType = new GraphQLObjectType({
     gender: { type: GraphQLString },
     status: { type: GraphQLString },
     phone: { type: GraphQLString },
+    role: { type: GraphQLString },
+    archieved: { type: GraphQLBoolean },
   }),
 });
 module.exports = UserType;
