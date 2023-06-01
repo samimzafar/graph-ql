@@ -1,99 +1,37 @@
-const { GraphQLString, GraphQLInt } = require("graphql");
-const UserType = require("../TypeDefs/UserType");
-const SuccessResponseType = require("../TypeDefs/SuccessResponseType");
-const { createOtp } = require("../../utils/createOtp");
-const { sequelize } = require("../../models");
+const moment = require("moment");
+const { sequelize } = require("../../model");
+const { encrypt } = require("../../utils/token");
+const config = require("../../config");
+const secretKey = config.get("signIn.jwtSecret");
+const md5 = require("md5");
 module.exports = {
-  addUser: {
-    type: UserType,
-    args: {
-      name: { type: GraphQLString },
-      email: { type: GraphQLString },
-      gender: { type: GraphQLString },
-      status: { type: GraphQLString },
-      phone: { type: GraphQLString },
-    },
-    resolve: async (parent, args) => {
-      const transaction = await sequelize.transaction();
-      try {
-        const {
-          Models: { Users, UserOtps },
-        } = parent;
-        let user = await Users.create(args, {
-          transaction,
-        });
-        user = user && user.get({ plain: true });
-        const otp = createOtp();
-        await UserOtps.create(
-          {
-            otp,
-            fk_user_id: user.id,
-          },
-          {
-            transaction,
-          }
-        );
-        await transaction.commit();
-        return args;
-      } catch (error) {
-        await transaction.rollback();
-      }
-    },
-  },
-
-  updateUser: {
-    type: SuccessResponseType,
-    args: {
-      id: { type: GraphQLInt },
-      status: { type: GraphQLString },
-      phone: { type: GraphQLString },
-    },
-    resolve: async (parent, args) => {
-      const { id, status, phone } = args;
+  login: async (parent, args) => {
+    const transaction = await sequelize.transaction();
+    try {
+      const { email, password } = args;
+      const hashedPassword = md5(password);
       const {
         Models: { Users },
       } = parent;
-      await Users.update(
-        {
-          status,
-          phone,
+      const user = await Users.findOne({
+        where: {
+          email,
+          password: hashedPassword,
         },
-        {
-          where: { id },
-          silent: true,
-        }
-      );
-      return {
-        success: true,
-        message: "Updated Successfully",
-        statusCode: 200,
+      });
+      user.token_time_stamp = moment().unix();
+      await user.save();
+      // Generate a JWT token
+      const tokenPayload = {
+        userId: user.id,
+        timeStamp: user.token_time_stamp,
+        role: user.role, // Include the timestamp or version identifier
       };
-    },
-  },
-
-  deleteUser: {
-    type: SuccessResponseType,
-    args: {
-      id: { type: GraphQLInt },
-    },
-    resolve: async (parent, args) => {
-      const { id } = args;
-      const {
-        Models: { Users },
-      } = parent;
-      await Users.update(
-        {
-          archieved: true,
-        },
-        {
-          where: { id },
-        }
-      );
-      return {
-        success: true,
-        message: "Deleted Successfully",
-        statusCode: 200,
-      };
-    },
+      const signInToken = encrypt(tokenPayload, secretKey);
+      await transaction.commit();
+      return { signInToken };
+    } catch (error) {
+      await transaction.rollback();
+    }
   },
 };

@@ -47,6 +47,14 @@ var config = convict({
       env: "DATABASE_PASSWORD",
     },
   },
+  signIn: {
+    jwtSecret: {
+      doc: "JWT Secret",
+      format: String,
+      default: "",
+      env: "JWT_SECRET",
+    },
+  },
 });
 
 // Load environment dependent configuration

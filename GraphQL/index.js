@@ -1,22 +1,12 @@
-const graphql = require("graphql");
-const query = require("./Queries/UserQuery");
-const mutation = require("./Mutations/userMutation");
-const { GraphQLObjectType, GraphQLSchema } = graphql;
+const graphql = require('graphql');
+const { QueryType } = require("./TypeDefs/QueryType");
+const { MutationType } = require("./TypeDefs/MutationType");
 
-const RootQuery = new GraphQLObjectType({
-  name: "query",
-  fields: {
-    usersRecord: query.getAllUsers,
-    userDetails: query.getOneUser,
-  },
+const { GraphQLSchema } = graphql;
+
+const schema = new GraphQLSchema({
+  query: QueryType,
+  mutation: MutationType
 });
 
-const Mutation = new GraphQLObjectType({
-  name: "mutation",
-  fields: {
-    createUser: mutation.addUser,
-    updateUser: mutation.updateUser,
-    deleteUser: mutation.deleteUser,
-  },
-});
-module.exports = new GraphQLSchema({ query: RootQuery, mutation: Mutation });
+module.exports = schema;
