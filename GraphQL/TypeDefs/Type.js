@@ -18,5 +18,4 @@ const TokenType = new GraphQLObjectType({
   }),
 });
 
-
 module.exports = { UserType, TokenType };

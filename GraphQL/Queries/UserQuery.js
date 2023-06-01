@@ -7,7 +7,6 @@ module.exports = {
     return data;
   },
 
-
   getOneUser: async (parent, args) => {
     const { id } = args;
     const {
@@ -16,4 +15,3 @@ module.exports = {
     return Users.findAll({ where: { id } });
   },
 };
-
