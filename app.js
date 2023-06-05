@@ -22,7 +22,7 @@ app.use(
     graphiql: true,
     introspection: true,
     playground: true,
-    context: () => context(req)
+    context: () => context(req),
   }))
 );
 // catch 404

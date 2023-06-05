@@ -27,7 +27,6 @@ const UserTypeResponse = new GraphQLObjectType({
   }),
 });
 
-
 const TokenType = new GraphQLObjectType({
   name: schemaToken,
   fields: () => ({

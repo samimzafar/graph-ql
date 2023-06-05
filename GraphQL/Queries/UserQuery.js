@@ -15,7 +15,7 @@ module.exports = {
     users.map(({ email, token_time_stamp, role }) => ({
       email,
       token_time_stamp,
-      role
+      role,
     }));
     return {
       status: 200,
@@ -37,5 +37,5 @@ module.exports = {
       message: "User retrieved successfully",
       data: user,
     };
-  }
+  },
 };
