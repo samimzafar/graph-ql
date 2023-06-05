@@ -2,13 +2,14 @@ const express = require("express");
 const app = express();
 const { graphqlHTTP } = require("express-graphql");
 const config = require("./config");
-const { Users } = require("./model");
+const { Users, Students } = require("./model");
 const graphqlURL = config.get("graphql");
 const schema = require("./GraphQL");
 
 const Root = {
   Models: {
     Users,
+    Students,
   },
 };
 

@@ -1,5 +1,6 @@
 ("use strict");
 const moment = require("moment");
+const { col, literal } = require("sequelize");
 const table = "students";
 module.exports = (sequelize, DataTypes) => {
   const Student = sequelize.define(
@@ -47,10 +48,17 @@ module.exports = (sequelize, DataTypes) => {
       section: {
         type: DataTypes.STRING,
       },
-      transport_type: {
-        type: DataTypes.STRING,
+      transport_number: {
+        type: DataTypes.INTEGER,
       },
       additional_details: {
+        type: DataTypes.STRING,
+      },
+      alumni: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      alumni_reason: {
         type: DataTypes.STRING,
       },
       dob: {
@@ -108,21 +116,79 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Student.createStudent = async (data) => {
-    return await Student.create({
-      fk_school_id: data.school_id,
-      fk_class_id: data.class_id,
-      admission_id: data.admission_id,
-      roll_id: data.roll_id,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      father_name: data.father_name,
-      phone_number: data.phone_number,
-      dob: data.dob,
-      gender: data.gender,
-      address: data.address,
-      section: data.section,
-      transport_type: data.transport_type,
-      additional_details: data.additional_details,
+    const transaction = await sequelize.transaction();
+    return await Student.create(
+      {
+        fk_school_id: data.school_id,
+        fk_class_id: data.class_id,
+        admission_id: data.admission_id,
+        roll_id: data.roll_id,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        father_name: data.father_name,
+        phone_number: data.phone_number,
+        dob: data.dob,
+        gender: data.gender,
+        address: data.address,
+        section: data.section,
+        transport_number: data.transport_number,
+        additional_details: data.additional_details,
+      },
+      transaction
+    );
+  };
+
+  Student.getAllStudents = async (whereClause) => {
+    const transaction = await sequelize.transaction();
+    const { schools, classes, fee_payments, transactions } = sequelize.models;
+    return await Student.findAll({
+      attributes: [
+        "id",
+        "admission_id",
+        "roll_id",
+        "first_name",
+        "last_name",
+        "father_name",
+        "phone_number",
+        "section",
+        "transport_number",
+        [col("schools.name"), "schoolName"],
+        [col("classes.class_name"), "className"],
+        [col("feePayments.total_amount"), "fees"],
+        [col("feePayments.transport"), "transportFees"],
+        [
+          literal(
+            "(SELECT createdAt FROM transactions WHERE fk_fees_payment_id = feePayments.id ORDER BY id DESC LIMIT 1)"
+          ),
+          "paidDate",
+        ],
+      ],
+      include: [
+        {
+          model: schools,
+          as: "schools",
+          attributes: [],
+        },
+        {
+          model: classes,
+          as: "classes",
+          attributes: [],
+        },
+        {
+          model: fee_payments,
+          as: "feePayments",
+          attributes: [],
+          include: [
+            {
+              model: transactions,
+              as: "transactions",
+              attributes: [],
+            },
+          ],
+        },
+      ],
+      where: whereClause,
+      transaction,
     });
   };
   return Student;

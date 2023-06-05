@@ -26,16 +26,13 @@ module.exports = {
   },
 
   getStudentProfile: async (parent, args) => {
-    const { userId } = args;
-    const {
-      Models: { Users },
-    } = parent;
-    let user = await Users.findAll({ where: { id: userId }, raw: true });
-    return {
-      status: 200,
-      success: true,
-      message: "User retrieved successfully",
-      data: user,
-    };
+    const { student } = args;
+    return student;
+    // return {
+    //   status: 200,
+    //   success: true,
+    //   message: "User retrieved successfully",
+    //   data: student,
+    // };
   },
 };
