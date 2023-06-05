@@ -1,10 +1,9 @@
 module.exports = {
-  getAllStudents: async (parent, args, context) => {
-    const token = await context();
+  getAllStudents: async (parent) => {
     const {
       Models: { Users },
     } = parent;
-    let users = await Users.findAll({ raw: true });
+    let users = await Users.findAll();
     if (!users || users.length === 0) {
       return {
         status: 404,

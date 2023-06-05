@@ -17,7 +17,7 @@ const context = (req) => req.header("Authorization");
 
 app.use(
   graphqlURL,
-  graphqlHTTP(async (req, res, next) => ({
+  graphqlHTTP(async (req) => ({
     schema,
     rootValue: Root,
     graphiql: true,
