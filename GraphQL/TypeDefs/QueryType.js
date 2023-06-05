@@ -1,21 +1,21 @@
 const { GraphQLObjectType, GraphQLInt } = require("graphql");
-const { getAllUsers, getOneUser } = require("../Queries/UserQuery");
+const { getAllStudents, getStudentProfile } = require("../Queries/UserQuery");
 const { UserTypeResponse } = require("./index");
 
 const QueryType = new GraphQLObjectType({
   name: "Query",
   fields: {
-    getAll: {
+    getAllStudents: {
       type: UserTypeResponse,
-      resolve: getAllUsers,
+      resolve: getAllStudents,
     },
 
-    getOne: {
+    getStudentProfile: {
       type: UserTypeResponse,
       args: {
         userId: { type: GraphQLInt },
       },
-      resolve: getOneUser,
+      resolve: getStudentProfile,
     },
   },
 });

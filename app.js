@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const { graphqlHTTP } = require("express-graphql");
 const config = require("./config");
-const { Users, sequelize } = require("./model");
+const { Users } = require("./model");
 const graphqlURL = config.get("graphql");
 const schema = require("./GraphQL");
 
@@ -14,6 +14,7 @@ const Root = {
 
 app.use(express.json());
 const context = (req) => req.header("Authorization");
+
 app.use(
   graphqlURL,
   graphqlHTTP(async (req, res, next) => ({

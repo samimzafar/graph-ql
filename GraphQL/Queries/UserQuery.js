@@ -1,5 +1,6 @@
 module.exports = {
-  getAllUsers: async (parent) => {
+  getAllStudents: async (parent, args, context) => {
+    const token = await context();
     const {
       Models: { Users },
     } = parent;
@@ -25,7 +26,7 @@ module.exports = {
     };
   },
 
-  getOneUser: async (parent, args) => {
+  getStudentProfile: async (parent, args) => {
     const { userId } = args;
     const {
       Models: { Users },
