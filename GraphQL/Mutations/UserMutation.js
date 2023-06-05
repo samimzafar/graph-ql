@@ -21,15 +21,19 @@ module.exports = {
       });
       user.token_time_stamp = moment().unix();
       await user.save();
-      // Generate a JWT token
       const tokenPayload = {
         userId: user.id,
         timeStamp: user.token_time_stamp,
-        role: user.role, // Include the timestamp or version identifier
+        role: user.role,
       };
       const signInToken = encrypt(tokenPayload, secretKey);
       await transaction.commit();
-      return { signInToken };
+      return {
+        status: 200,
+        success: true,
+        message: "Login successful",
+        data: { accessToken: signInToken },
+      };
     } catch (error) {
       await transaction.rollback();
     }

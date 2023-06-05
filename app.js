@@ -5,9 +5,6 @@ const config = require("./config");
 const { Users, sequelize } = require("./model");
 const graphqlURL = config.get("graphql");
 const schema = require("./GraphQL");
-//Root is used if you want to pass some variable,DB URL,Ports,accessKey, config keys
-//etc so that you can acces from parent param
-//here in Root I have passed Models so that anywhere in query i can access any models
 
 const Root = {
   Models: {
@@ -16,6 +13,7 @@ const Root = {
 };
 
 app.use(express.json());
+const context = (req) => req.header("Authorization");
 app.use(
   graphqlURL,
   graphqlHTTP(async (req, res, next) => ({
@@ -24,12 +22,7 @@ app.use(
     graphiql: true,
     introspection: true,
     playground: true,
-    context: {
-      models: sequelize.models,
-      req,
-      res,
-      next,
-    },
+    context: () => context(req)
   }))
 );
 // catch 404
