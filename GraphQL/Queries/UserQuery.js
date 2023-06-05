@@ -27,7 +27,12 @@ module.exports = {
 
   getStudentProfile: async (parent, args) => {
     const { student } = args;
-    return student;
+    return {
+      status: 200,
+      success: true,
+      message: "User retrieved successfully",
+      data: student,
+    };
     // return {
     //   status: 200,
     //   success: true,

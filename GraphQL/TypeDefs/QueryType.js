@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLInt } = require("graphql");
 const { getAllStudents, getStudentProfile } = require("../Queries/UserQuery");
-const { UserTypeResponse, StudentType } = require("./index");
+const { UserTypeResponse } = require("./index");
 const authenticateUser = require("../../middlewares/authenticateUser");
 const authenticateStudent = require("../../middlewares/authenticateStudent");
 
@@ -12,7 +12,7 @@ const QueryType = new GraphQLObjectType({
       resolve: authenticateUser(getAllStudents),
     },
     getStudentProfile: {
-      type: StudentType,
+      type: UserTypeResponse,
       args: {
         userId: { type: GraphQLInt },
       },

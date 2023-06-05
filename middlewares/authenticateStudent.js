@@ -1,44 +1,43 @@
-const { col } = require("sequelize");
-const { Students, Schools, Classes } = require("../model");
-const ApiError = require("../utils/ApiError");
+const { col } = require('sequelize');
+const { Students, Schools, Classes } = require('../model');
+const ApiError = require('../utils/ApiError');
+
 module.exports = (resolverFunction) => {
  return async (parent, args, context, info) => {
   const { userId } = args;
-  const student = await Students.findByPk(userId,
-   {
-    attributes: [
-     "id",
-     "admission_id",
-     "roll_id",
-     "first_name",
-     "last_name",
-     "father_name",
-     "phone_number",
-     "section",
-     "transport_number",
-     "alumni",
-     "alumni_reason",
-     [col("schools.name"), "schoolName"],
-     [col("classes.class_name"), "className"],
-    ],
-    include: [
-     {
-      model: Schools,
-      as: "schools",
-      attributes: [],
-     },
-     {
-      model: Classes,
-      as: "classes",
-      attributes: [],
-     },
-    ],
-    raw: true,
-   }
-  );
+
+  const student = await Students.findByPk(userId, {
+   attributes: Object.keys(Students.rawAttributes).map((attribute) => {
+    if (attribute === 'schoolName') {
+     // Handle the schoolName attribute separately since it requires a column alias
+     return [col('schools.name'), 'schoolName'];
+    }
+    if (attribute === 'className') {
+     // Handle the className attribute separately since it requires a column alias
+     return [col('classes.class_name'), 'className'];
+    }
+    // Return the attribute as it is
+    return attribute;
+   }),
+   include: [
+    {
+     model: Schools,
+     as: 'schools',
+     attributes: [],
+    },
+    {
+     model: Classes,
+     as: 'classes',
+     attributes: [],
+    },
+   ],
+   raw: true,
+  });
+
   if (!student) {
-   throw new ApiError(401, "Student not exists");
+   throw new ApiError(401, 'Student does not exist');
   }
+
   args.student = student;
   return resolverFunction(parent, args, context, info);
  };
