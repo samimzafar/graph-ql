@@ -3,7 +3,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-  GraphQLUnionType,
+  GraphQLList
 } = require("graphql");
 
 const schemaUser = "user";
@@ -38,19 +38,6 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
-const UserTypeUnion = new GraphQLUnionType({
-  name: "UserTypeUnion",
-  types: [UserType, StudentType],
-  resolveType(value) {
-    // Check if the value has a specific field unique to StudentType
-    // eslint-disable-next-line no-prototype-builtins
-    if (value.hasOwnProperty("admission_id")) {
-      return StudentType;
-    }
-    // Default to UserType
-    return UserType;
-  },
-});
 
 
 const UserTypeResponse = new GraphQLObjectType({
@@ -59,7 +46,7 @@ const UserTypeResponse = new GraphQLObjectType({
     status: { type: GraphQLInt },
     success: { type: GraphQLBoolean },
     message: { type: GraphQLString },
-    data: { type: UserTypeUnion },
+    data: { type: new GraphQLList(StudentType) }
   }),
 });
 
