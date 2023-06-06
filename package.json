@@ -15,7 +15,8 @@
     "db:migrate:status": "npx sequelize db:migrate:status",
     "db:seed:create": "npx sequelize-cli seed:generate --name",
     "db:seed": "npx sequelize-cli db:seed:all",
-    "db:seed:undo": "npx sequelize-cli db:seed:undo"
+    "db:seed:undo": "npx sequelize-cli db:seed:undo",
+    "both": "concurrently \" npm install\" \"cd client && npm install\""
   },
   "keywords": [],
   "author": "",
