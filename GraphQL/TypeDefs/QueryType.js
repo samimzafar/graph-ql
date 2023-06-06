@@ -11,6 +11,10 @@ const QueryType = new GraphQLObjectType({
       type: UserTypeResponse,
       resolve: authenticateUser(getAllStudents),
     },
+    getAlumniStudents: {
+      type: UserTypeResponse,
+      resolve: authenticateUser(getAllStudents),
+    },
     getStudentProfile: {
       type: StudentType,
       args: {

@@ -5,14 +5,11 @@ const config = require("../config");
 const secretKey = config.get("signIn.jwtSecret");
 module.exports = (resolverFunction) => {
  return async (parent, args, context, info) => {
-  // Retrieve the token from the context
   const token = context();
-
-  // Perform authentication logic with the token
-  if (!token) {
+  const decoded = jwt.verify(token, secretKey);
+  if (!token || !decoded) {
    throw new Error("Unauthorized access.");
   }
-  const decoded = jwt.verify(token, secretKey);
   const { data } = decoded;
   const user = await Users.findByPk(data.userId);
   if (!user) {

@@ -3,8 +3,11 @@ module.exports = {
     const {
       Models: { Students },
     } = parent;
-    let students = await Students.findAll();
-    console.log("🚀 ~ file: UserQuery.js:7 ~ getAllStudents: ~ students:", students);
+    let students = await Students.findAll({
+      where: {
+        alumni: true
+      }
+    });
     if (!students || students.length === 0) {
       return {
         status: 404,
