@@ -3,11 +3,7 @@ module.exports = {
     const {
       Models: { Students },
     } = parent;
-    let students = await Students.findAll({
-      where: {
-        alumni: true
-      }
-    });
+    let students = await Students.findAll({});
     if (!students || students.length === 0) {
       return {
         status: 404,
@@ -25,7 +21,15 @@ module.exports = {
   },
 
   getStudentProfile: async (parent, args) => {
-    const { student } = args;
-    return student;
+    const { userId } = args;
+    const {
+      Models: { Students },
+    } = parent;
+    let students = await Students.findOne({
+      where: {
+        id: userId
+      }
+    });
+    return students;
   },
 };
