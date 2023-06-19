@@ -27,8 +27,8 @@ module.exports = {
     } = parent;
     let students = await Students.findOne({
       where: {
-        id: userId
-      }
+        id: userId,
+      },
     });
     return students;
   },

@@ -3,13 +3,12 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
-  GraphQLList
+  GraphQLList,
 } = require("graphql");
 
 const schemaUser = "user";
 const schemaStudent = "student";
 const schemaToken = "token";
-
 
 const StudentType = new GraphQLObjectType({
   name: schemaStudent,
@@ -26,7 +25,7 @@ const StudentType = new GraphQLObjectType({
     transport_number: { type: GraphQLInt },
     alumni: { type: GraphQLBoolean },
     alumni_reason: { type: GraphQLString },
-  })
+  }),
 });
 
 const UserType = new GraphQLObjectType({
@@ -38,15 +37,13 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
-
-
 const UserTypeResponse = new GraphQLObjectType({
   name: "UserTypeResponse",
   fields: () => ({
     status: { type: GraphQLInt },
     success: { type: GraphQLBoolean },
     message: { type: GraphQLString },
-    data: { type: new GraphQLList(StudentType) }
+    data: { type: new GraphQLList(StudentType) },
   }),
 });
 
